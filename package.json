@@ -17,12 +17,12 @@
     "filemanager-webpack-plugin": "^8.0.0",
     "html-loader": "^5.0.0",
     "html-webpack-plugin": "^5.6.0",
-    "sass": "^1.77.6",
+    "sass": "^1.78.0",
     "sass-loader": "^14.2.1",
     "style-loader": "^4.0.0",
-    "webpack": "^5.92.1",
+    "webpack": "^5.94.0",
     "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^5.0.4"
+    "webpack-dev-server": "^5.1.0"
   },
   "dependencies": {
     "animejs": "^3.2.2",

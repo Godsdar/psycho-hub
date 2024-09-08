@@ -348,7 +348,8 @@ svg {
 
     &-list {
       z-index: 1;
-      padding-top: 16px;
+      padding-top: 32px;
+      padding-bottom: 20px;
       padding-right: 16px;
       flex-direction: column;
       text-align: right;
@@ -377,6 +378,34 @@ svg {
     width: 30px;
     height: 3px;
     margin-bottom: 5px;
+    transition: all .2s linear;
+
+    &-animation {
+      height: 4px;
+      transition: all .2s linear;
+      &:first-child {
+        transform: translateY(9px) rotate(45deg);
+      }
+      &:nth-child(2) {
+        opacity: 0;
+      }
+      &:last-child {
+        transform: translateY(-9px) rotate(-45deg);
+      }
+
+      &-reverse {
+        height: 3px;
+        &:first-child {
+          transform: translateY(-9px) rotate(-45deg);
+        }
+        &:nth-child(2) {
+          opacity: 1;
+        }
+        &:last-child {
+          transform: translateY(9px) rotate(45deg);
+        }
+      }
+    }
   }
 
   .first-form {

@@ -11,16 +11,40 @@ const heartAnimation = anime({
 	scale: 1.5,
 });
 
-const burgerFrame = function (element) {
+var burgerAnime = anime({
+	targets: '.menu',
+	duration: 300,
+	width: 170,
+	easing: 'easeInOutSine',
+	autoplay: false,
+	complete: (anim) => {
+		anim.reverse();
+	}
+});
+
+const burgerAnim = anime({
+	targets: '.menu',
+	duration: 300,
+	autoplay: false,
+	complete: (anim) => {
+		anim.reverse();
+	}
+});
+
+const burgerTransformation = function () {
+	const bars = document.querySelectorAll('.bar');
+	if (bars[0].classList.contains('bar-animation'))
+		for (let bar of bars)
+			bar.classList.remove('bar-animation');
+	else
+		for (let bar of bars)
+			bar.classList.add('bar-animation');
+}
+
+const burgerFrame = function (element, step, flag) {
 	const that = this;
 	return function () {
-		let width = parseFloat(element.style.width);
-		if (+width >= 200) {
-			clearInterval(that);
-			return;
-		}
-
-		let step = 5;
+		const width = +parseFloat(window.getComputedStyle(element).width);
 		element.style.width = width + step + "px";
 	};
 };
@@ -29,20 +53,23 @@ const burgerMenuAppear = function (burger) {
 	let id = null;
 
 	const menu = burger.parentElement;
-	console.log(menu.width);
+	const width = window.getComputedStyle(menu).width;
+	let step;
+
+	if (+ParseInt(width) > 0)
+		step = 5;
+	else
+		step = -5;
 
 	burger.style.marginTop = "-16px";
+	let flag = false;
 
-	id = setInterval(burgerFrame(menu), 10);
-	if (+parseFloat(menu.style.width) > 100) {
+	id = setInterval(burgerFrame(menu, step, flag), 10);
+
+	if (+parseFloat(menu.style.width) > 100 && step > 0 || +parseFloat(menu.style.width) <= 0 && step < 0) {
 		clearInterval(id);
-		return;
-	}
-};
-
-const burgerOnClick = function (event) {
-	const burger = event.target.closest(".burger-menu");
-	burgerMenuAppear(burger);
+		console.log('inside');
+	} 
 };
 
 const frame = function (comment) {
@@ -69,6 +96,8 @@ const deleteAnimation = function (comment) {
 };
 
 const onClick = function (event) {
+	if (!event.target.classList.contains("comment-delete-button")) return;
+
 	const comment = event.target.closest(".comment");
 	const xhttp = new XMLHttpRequest();
 
@@ -84,4 +113,5 @@ const commentsSection = document.querySelector(".comments-section");
 commentsSection.addEventListener("click", onClick);
 
 const burger = document.querySelector(".burger-menu");
-burger.addEventListener("click", burgerOnClick);
+burger.addEventListener("click", burgerAnime.play);
+burger.addEventListener("click", burgerTransformation);
